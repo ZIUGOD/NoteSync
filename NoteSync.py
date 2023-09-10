@@ -1,34 +1,32 @@
-from flask import Flask, render_template, request, flash, session, redirect, url_for
+from flask import Flask, flash, render_template, redirect, url_for, request
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+from flask_login import (
+    LoginManager,
+    UserMixin,
+    login_user,
+    login_required,
+    logout_user,
+    current_user,
+)
+from NoteSync import (
+    db,
+)  # Substitua 'your_app_name' pelo nome real do seu aplicativo
 from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
-app.secret_key = "supersecretkey"
+app.secret_key = "OrzQhJX6Uk8ThBMaARjqCjoGfqcXdfYa"  # Troque por uma chave secreta mais segura em produção
 
-# Simulando um banco de dados temporário para usuários
+# Simulando um banco de dados temporário
 users_db = []
-
-# Simulando um banco de dados temporário para notas
 notes_db = []
 
 
 @app.route("/")
 def index():
-    return render_template("index.html", notes=notes_db)
-
-
-@app.route("/add_note", methods=["POST"])
-def add_note():
-    if request.method == "POST":
-        if "user" not in session:
-            flash("Você precisa estar logado para adicionar notas.")
-            return redirect(url_for("login"))
-
-        title = request.form["title"]
-        content = request.form["content"]
-
-        notes_db.append({"title": title, "content": content})
-        flash("Nota adicionada com sucesso!")
-        return redirect(url_for("notes"))
+    # Recuperando todas as notas do banco de dados
+    notes = notes_db  # Usando a lista de notas simulada
+    return render_template("index.html", notes=notes)
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -54,7 +52,6 @@ def login():
 
         user = next((u for u in users_db if u["username"] == username), None)
         if user and check_password_hash(user["password"], password):
-            session["user"] = username  # Adicione o usuário à sessão
             flash("Login bem-sucedido!")
             return redirect(url_for("notes"))
 
@@ -65,12 +62,25 @@ def login():
 
 @app.route("/notes")
 def notes():
-    if "user" not in session:
-        flash("Você precisa estar logado para acessar suas notas.")
-        return redirect(url_for("login"))
-
     return render_template("notes.html", notes=notes_db)
 
 
+@app.route("/add_note", methods=["GET", "POST"])
+@login_required  # Adicione este decorator para proteger a rota
+def add_note():
+    if request.method == "POST":
+        note_text = request.form["note_text"]
+
+        # Salve a nota no banco de dados associando-a ao usuário logado
+        note = Note(text=note_text, user_id=current_user.id)
+        db.session.add(note)
+        db.session.commit()
+
+        flash("Nota adicionada com sucesso!", "success")
+        return redirect(url_for("index"))
+
+    return render_template("add_notes.html")
+
+
 if __name__ == "__main__":
-    app.run(debug=True, port=5001)
+    app.run(debug=True, port=4999)

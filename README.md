@@ -1,2 +1,3 @@
-# NoteSync
-Um pequeno projeto destinado à matéria de Software para Serviços, da faculdade.
+# autenticacao
+Projeto exemplo para disciplina Software para Serviço
+Engenharia de Software - UniEvangélica
