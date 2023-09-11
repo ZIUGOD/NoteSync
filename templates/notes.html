@@ -7,82 +7,22 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            margin: 0;
-            padding: 0;
-        }
 
-        .container {
-            max-width: 40%;
-            margin: 0 auto;
-            padding: 2em;
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 0 1em grey;
-            text-align: center;
-        }
-
-        h1,
-        h2,
-        h3 {
-            color: black;
-        }
-
-        a {
-            color: #3498db;
-            text-decoration: none;
-        }
-
-        button {
-            background-color: whitesmoke;
-            color: black;
-            padding: 1% 1.5%;
-            border: 0.2vw solid black;
-            cursor: pointer;
-            border-radius: 1vw;
-        }
-
-        button:hover {
-            background-color: lime;
-        }
-
-        input[type="text"],
-        input[type="password"] {
-            width: 100%;
-            max-width: 30%;
-            padding: 1em;
-            margin: 3% auto;
-            border: 0.2vw solid #ccc;
-            border-radius: 3px;
-            box-shadow: 0 0 1em grey;
-            border-radius: 1vw;
-        }
-
-        .flash {
-            background-color: orange;
-            color: #fff;
-            padding: 1vw;
-            border-radius: 1vw;
-            text-align: center;
-            margin-bottom: 1vw;
-            box-shadow: 0 0 1em grey;
-        }
     </style>
 </head>
 
 <body>
-    {% include 'header.html' %}
+    {% include 'base.html' %}
     <div class="container">
         <h1>Notas</h1>
         <div id="add-note">
             <form action="/add_note" method="post">
                 <label for="title">Título:</label><br>
-                <input type="text" id="title" name="title" required><br><br>
+                <input type="text" id="title" name="title" placeholder="Título"><br><br>
 
                 <label for="content">Conteúdo:</label><br>
-                <textarea id="content" name="content" rows="4" cols="50" required></textarea><br><br>
+                <textarea id="content" name="content" rows="6" cols="64" placeholder="Insira seu texto..."
+                    required></textarea><br><br>
 
                 <input type="submit" value="Salvar">
             </form>
@@ -96,8 +36,6 @@
         </ul>
         {% endif %}
         {% endwith %}
-        <p>Lista de notas...</p>
-        <p><a href="{{ url_for('index') }}">Sair</a></p>
     </div>
 </body>
 

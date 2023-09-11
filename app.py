@@ -66,7 +66,7 @@ def login():
 @app.route("/notes")
 def notes():
     if "user" not in session:
-        flash("Você precisa estar logado para acessar suas notas.")
+        flash("Você precisa estar logado para adicionar notas.")
         return redirect(url_for("login"))
 
     return render_template("notes.html", notes=notes_db)

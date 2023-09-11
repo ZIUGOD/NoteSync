@@ -7,50 +7,21 @@
     <title>NoteSYnc</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-    <style>
-        header {
-            background-color: #e6e6e6;
-            padding: 10px;
-            text-align: center;
-        }
-
-        nav {
-            margin-top: 10px;
-        }
-
-        nav a {
-            text-decoration: none;
-            margin: 10px;
-            padding: 5px 10px;
-            border: 1px solid #ccc;
-            background-color: #f2f2f2;
-            /* Cor de fundo pastel */
-            color: #333;
-            /* Cor do texto */
-            border-radius: 5px;
-        }
-
-        nav a:hover {
-            background-color: #d9d9d9;
-            /* Cor de fundo pastel mais escura no hover */
-        }
-    </style>
 </head>
 
 <body>
-    {% include 'header.html' %}
-    <h1>Bem-vindo à Página Inicial</h1>
+    {% include 'base.html' %}
 
-    <h2>Notas:</h2>
+
 
     {% for note in notes %}
-    <div class="note">
-        <h3>{{ note['title'] }}</h3>
-        <p>{{ note['content'] }}</p>
+    <div id="note-container">
+        <div class="note">
+            <h3>{{ note['title'] }}</h3>
+            <p>{{ note['content'] }}</p>
+        </div>
     </div>
     {% endfor %}
-
-    <a href="{{ url_for('notes') }}">Ver Todas as Notas</a>
 </body>
 
 </html>
