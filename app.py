@@ -4,10 +4,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 app = Flask(__name__)
 app.secret_key = "supersecretkey"
 
-# Simulando um banco de dados temporário para usuários
 users_db = []
 
-# Simulando um banco de dados temporário para notas
 notes_db = []
 
 
